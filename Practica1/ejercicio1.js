@@ -10,7 +10,8 @@
 
 
 let nombre = "Armando";
-const edad = 25;
+const 
+edad = 25;
 nombre = "Ana Maria";
 const saludo = "Hola, " + nombre + ". Tienes " + edad + " años.";
 console.log(saludo); // muestra en consola el contenido de saludo
