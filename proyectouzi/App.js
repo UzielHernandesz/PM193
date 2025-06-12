@@ -6,12 +6,23 @@ import React, {use, useState} from 'react';
 // componente propio TEXTO
 
 const Texto = () => {
-  const [contenido,setContenido]=useState('Hola Mundo');
-  const actualizarTexto = () => {setContenido('ESTADO MODIFICADO')};
+  const [contenido,setContenido,]=useState('Hola Mundo');
+  const actualizarTexto = () => {setContenido('ESTADO MODIFICADO') };
 
   
   return(
     <Text onPress={actualizarTexto}> {contenido} </Text>
+    
+  )
+}
+const Boton = () => {
+  const [texto,setTexto,]=useState('Presionar');
+  const cambiarTexto = () => {setTexto('ME PUCHARON') };
+
+  
+  return(
+    <Button title={texto} onPress={cambiarTexto}></Button>
+    
   )
 }
   
@@ -22,7 +33,7 @@ export default function App() {
       <Texto> Hola </Texto>
       <Texto> Mundo </Texto>
       <Texto> React Native</Texto>
-      <Button title='Presionar'></Button>
+      <Boton title='Presionar'></Boton>
       <StatusBar style="auto" />
     </View>
   );
