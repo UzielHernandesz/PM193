@@ -1,11 +1,17 @@
 // Zona 1 importaciones 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import React, {use, useState} from 'react';
 
-const Texto = (props) => {
-  const {children}=props
+// componente propio TEXTO
+
+const Texto = () => {
+  const [contenido,setContenido]=useState('Hola Mundo');
+  const actualizarTexto = () => {setContenido('ESTADO MODIFICADO')};
+
+  
   return(
-    <Text>{children}</Text>
+    <Text onPress={actualizarTexto}> {contenido} </Text>
   )
 }
   
