@@ -1,49 +1,42 @@
-// Zona 1 importaciones 
+/* ZONA1: Importaciones */
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import React, {use, useState} from 'react';
+import React, { useState } from 'react';
 
-// componente propio TEXTO
-
-const Texto = () => {
-  const [contenido,setContenido,]=useState('Hola Mundo');
-  const actualizarTexto = () => {setContenido('ESTADO MODIFICADO') };
-
-  
-  return(
-    <Text onPress={actualizarTexto}> {contenido} </Text>
-    
+const Texto= ({style})=> {
+  const [contenido,setContenido] = useState('Hola Mundo')
+  const actualizaTexto = () => {setContenido('Estado Modificado')}
+  return (
+    <Text style={[styles.text,style]} onPress={actualizaTexto}>{contenido}</Text>
   )
 }
-const Boton = () => {
-  const [texto,setTexto,]=useState('Presionar');
-  const cambiarTexto = () => {setTexto('ME PUCHARON') };
 
-  
-  return(
-    <Button title={texto} onPress={cambiarTexto}></Button>
-    
-  )
-}
-  
-/* Zona 2: Main */ 
+/* ZONA2: Main */
 export default function App() {
   return (
     <View style={styles.container}>
-      <Texto> Hola </Texto>
-      <Texto> Mundo </Texto>
-      <Texto> React Native</Texto>
-      <Boton title='Presionar'></Boton>
+      <Texto style={styles.azul}></Texto>
+      <Texto style={styles.verde}></Texto>
+      <Texto style={styles.negro}></Texto>
+      <Button title="Presionar"></Button>
       <StatusBar style="auto" />
     </View>
   );
 }
-/* Zona 3: Estilos */ 
+
+/* ZONA3: Styles */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'strech',
     justifyContent: 'center',
   },
+  text:{
+    color: 'white',
+    fontSize: 27,
+  },
+  azul: {backgroundColor: 'blue'},
+  verde: {backgroundColor: 'green'},
+  negro: {backgroundColor: 'black',}
 });
