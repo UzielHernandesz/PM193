@@ -1,42 +1,78 @@
-/* ZONA1: Importaciones */
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+
+
 import React, { useState } from 'react';
+import { Modal, View, Text, StyleSheet, Button, Pressable } from 'react-native';
 
-const Texto= ({style})=> {
-  const [contenido,setContenido] = useState('Hola Mundo')
-  const actualizaTexto = () => {setContenido('Estado Modificado')}
-  return (
-    <Text style={[styles.text,style]} onPress={actualizaTexto}>{contenido}</Text>
-  )
-}
-
-/* ZONA2: Main */
 export default function App() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
-      <Texto style={styles.azul}></Texto>
-      <Texto style={styles.verde}></Texto>
-      <Texto style={styles.negro}></Texto>
-      <Button title="Presionar"></Button>
-      <StatusBar style="auto" />
+      <Button title="Mostrar Modal" onPress={handleOpenModal} />
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={handleCloseModal}
+        onShow={() => console.log("Modal mostrado")}
+        onDismiss={() => console.log("Modal cerrado")}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>¡Hola desde el Modal!</Text>
+            <Pressable style={styles.buttonClose} onPress={handleCloseModal}>
+              <Text style={styles.textStyle}>Cerrar</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
 
-/* ZONA3: Styles */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'strech',
     justifyContent: 'center',
+    alignItems: 'center'
   },
-  text:{
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    elevation: 5
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 18
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2
+  },
+  textStyle: {
     color: 'white',
-    fontSize: 27,
-  },
-  azul: {backgroundColor: 'blue'},
-  verde: {backgroundColor: 'green'},
-  negro: {backgroundColor: 'black',}
+    fontWeight: 'bold',
+    textAlign: 'center'
+  }
 });
