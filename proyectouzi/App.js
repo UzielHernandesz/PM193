@@ -1,62 +1,83 @@
-/*ZONA 1: Importaciones */
-import { StatusBar } from 'expo-status-bar';
-import { View, TextInput, Text, StyleSheet, ScrollView, Button } from 'react-native';
-import React, { useState } from 'react';
+import{
+  ScrollView, //hacer el deslizable
+  StatusBar, //barra de estado
+  StyleSheet, //estilos
+  Text, //texto
+} from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+const App = () => {
+ return (
+  <SafeAreaProvider>
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <ScrollView style={styles.scrollView} horizontal={true}>
+        <ScrollView>
+          <Text style={styles.text}>
+            Este es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades.     
+            ste es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades. 
+            ste es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades. 
+            ste es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades. 
+            ste es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades. 
+            ste es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades.  
+            ste es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades. 
+            ste es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades. 
+            ste es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades. 
+            ste es un ejemplo de una aplicación React Native con SafeAreaView y ScrollView.
+            Puedes agregar más contenido aquí para ver cómo funciona el desplazamiento.
+            Asegúrate de que el contenido sea lo suficientemente largo para activar el desplazamiento.
+            Puedes personalizar los estilos según tus necesidades. 
+          </Text>
+        </ScrollView>
+      </ScrollView>
+      </SafeAreaView>
 
-//ZONA 2: Main 
-export default function App() {
- const [texto, setTexto] = useState('');
-
-
-
-
-  const AlertaBasica = () => {
-    window.alert('Hola Mundo, soy una alerta básica');
-  };
-  const AlertaConfirmacion = () => {
-    const confirmacion = window.confirm('¿Gus es Gustavo?');
-    if (confirmacion) {
-      window.alert('Exactamente');
-    } else {
-      window.alert('¡Como que no!');
-    }
-  }
-  const AlertaTexto = () => {
-    const confirmacion = window.prompt('¿Erick está aquí?');
-    if (confirmacion) {
-      window.alert(`¡Exactamente ${confirmacion}!`);
-    } else {
-      window.alert('¡Responde!');
-    }
-
-    const AlerConfirmacion= () => {
-    const confirmacion = window.prompt('¿Que edad tienes?');
-    const numero = parseInt(confirmacion)
-    if (numero >= 1 && numero <=70) {
-      window.alert(`¡Tu edad es, ${numero}!`);
-    } else {
-      window.alert('¡Edad incorrecta como fallas en esto??!');
-    }
-  }
-  };
-  return (
-    <View style={styles.container}>
-      <Button title='Alerta Basica' onPress={AlertaBasica}></Button>
-      <Button title='Alerta Confirmación' onPress={AlertaConfirmacion}></Button>
-      <Button title='Alerta Texto' onPress={AlertaTexto}></Button>
-      <Button title='Alerta Edad' onPress={AlerConfirmacion}></Button>
-
-    </View>
+  </SafeAreaProvider>
   );
 }
 
 
-//ZONA 3: Estilos- Estética
+
+ //Definimos los estilos con StyleSheet
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    paddingBottom: 80,
+    flex: 1,                             // Ocupa todo el alto disponible de la pantalla
+    paddingTop: StatusBar.currentHeight // Evita que el contenido se solape con la barra de estado
   },
-  
+  scrollView: {
+    backgroundColor: 'green',            // Fondo rosa para visualizar el área del ScrollView
+  },
+  text: {
+    fontSize: 42,                        // Texto grande
+    padding: 12,                         // Espaciado interno
+  },
 });
+
+// Exportamos el componente para que pueda ser usado por la app
+export default App;
