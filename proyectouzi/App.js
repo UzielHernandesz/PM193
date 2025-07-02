@@ -1,100 +1,66 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react'; //Importamos useeffect y useState
-import { ActivityIndicator, FlatList, SafeAreaView } from 'react-native'; //Importamos activityIndicator
+// Importamos react y sus funciones para manejar estados y ejecutar código cuando
+// la app cargue 
+import React, { useEffect, useState } from 'react';
 
-const App = () => {
-  const [ loading, setLoading ] = useState(true);
-  const [ users, setUsers ] = useState([]);
+// Importamos componentes de react native para mostrar la interfaz, listas y estilos
+import { View, Text, FlatList, SectionList, StyleSheet } from 'react-native';
 
+//Creamos el componente principal App y usamos un estado "personas" que está vacío
+export default function App() {
+  const [personas, setPersonas] = useState([]); //Con setPersona actualizamos y obtenemos el backend
+
+  //Se ejecuta una vez cuando la app carga
   useEffect(() => {
-    setTimeout(() => {
-      fetch('https://jsonplaceholder.typicode.com/users')
-      .then(resp => resp.json())
-      .then(data => {
-        setUsers(data);
-        setLoading(false);
-      })
-      .catch(err => { 
-      console.error('Error al cargar usuarios: ', err);
-      setLoading(false);
-      });
-    }, 2000);
-
+    fetch('http://localhost:8000/nombres') //llamamos el endpoint
+      .then(res => res.json()) //si la respuesta llega correcta entonces
+      .then(data => setPersonas(data)) // guardamos los datos en setPersonas
+      .catch(err => console.error(err)); //sino muestra el error
   }, []);
 
+  // Datos para FlatList: mostramos solo nombres
+  // Usamos map para ir trayendo los datos y transformarlos en un nuevo arreglo
+  const flatData = personas.map((p, index) => ({
+    key: index.toString(), //convierte el número a texto
+    nombre: p.Nombre, //traemos solo el nombre de p que es personas
+    apellido: p.Apellido
+  }));
 
-const renderItem = ({ item }) => (
-  <View style={styles.card}>
-    <Text style={styles.name}> {item.name} </Text>
-    <Text style={styles.text}> {item.email} </Text>
-    <Text style={styles.text}> {item.address.city} </Text>
-    <Text style={styles.text}> {item.company.name} </Text>
-  </View>
-);
+  // Datos para SectionList: agrupado por Apellido
+  const sectionData = personas.map((p) => ({
+    title: p.Apellido, //aqui traemos de acuerdo a una sección específica, osea apellidos
+    data: [p.Nombre] // traemos también el nombre pero solo como extra
+  }));
 
-
-
-
-
+  // Renderizamos la interfaz de usuario
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Si aun esta cargando, se muestra el indicador de carga */}
-      {loading ? (
-        <View style= {styles.loadingContainer}>
-          <ActivityIndicator
-            size= "large"
-            color= "#007bff" 
-          />
-          <Text style={styles.loadingText}> Cargando usuarios... </Text>
-        </View>
-      ) : (
-        <FlatList
-          data={users}
-          keyExtractor= { item => item.id.toString() }
-          renderItem= { renderItem }
-          contentContainerStyle= { styles.list }
-          />
-      )}
-    </SafeAreaView>
+
+    //Esto es para flatlist
+    <View style={styles.container}>
+      <Text style={styles.title}>FlatList - Solo Nombres</Text>
+      <FlatList 
+        data={flatData} //por cada dato, que se cree un texto
+        renderItem={({ item }) => <Text style={styles.item}>{item.apellido} {item.nombre}</Text>}
+        keyExtractor={item => item.key}
+      />
+
+      {/* Esto es para SectionList */}
+      <Text style={styles.title}>SectionList - Agrupado por Apellido</Text> {/* Muestra el título */}
+      <SectionList
+        sections={sectionData} /* Se pasan los datos a mostrar en la SectionList */
+        keyExtractor={(item, index) => item + index} /* Se identifica de manera unica el item, Andrea0, Carol1 */
+        renderItem={({ item }) => <Text style={styles.item}>{item}</Text>} /* defino cada elemento de una sección (nombres)*/
+        renderSectionHeader={({ section: { title } }) => ( /* defino como mostrar cada seccion (apellidos) */
+          <Text style={styles.header}>{title}</Text> 
+        )}
+      />
+    </View>
   );
-};
+}
 
+// Son los estilos que le dare a la interfaz
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  loadingContainer:{
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    marginTop: 12, 
-    fontSize: 16,
-    color: '#333',
-  },
-  list: {
-    paddingBottom: 20,
-  },
-  card: {
-    backgroundColor: '#f0f0f0',
-    padding: 12,
-    borderRadius: 8,
-    marginBottom: 10,
-    elevation: 2,
-  },
-  name : {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  text: {
-    fontSize: 14,
-    color: '#333',
-    marginTop: 2,
-  },
+  container: { flex: 1, paddingTop: 50, paddingHorizontal: 20 },
+  title: { fontSize: 20, fontWeight: 'bold', marginVertical: 10 },
+  item: { padding: 10, fontSize: 16 },
+  header: { fontSize: 18, fontWeight: 'bold', backgroundColor: '#ddd', padding: 5 },
 });
-
-export default App;
